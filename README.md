@@ -1,3 +1,17 @@
+# Catalog Microservice
+
+This is the Catalog microservice for the Marketplace project. It is built using **Symfony** and is designed to run within a Kubernetes cluster.
+
+## Features
+* **Product Management**: Core logic for handling catalog items.
+* **Optimized Caching**: Uses Redis as a cache adapter for high performance.
+* **Cloud Native**: Fully containerized and ready for deployment via Helm.
+
+## Technical Stack
+* **PHP 8.x** (Symfony Framework)
+* **Redis**: Primary cache provider.
+* **Kubernetes/MicroK8s**: Target runtime environment.
+
 ## Maintain
 ### Enter container
 ```shell

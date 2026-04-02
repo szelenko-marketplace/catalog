@@ -16,3 +16,4 @@
 /data/postgres/*
 !/data/.gitkeep
 values.yaml
+/data/postgres/
