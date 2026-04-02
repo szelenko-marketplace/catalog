@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: {{.Values.serviceName}}-nginx-config
+data:
+    default.conf: |
+        server {
+            listen 80;
+            root /var/www/app/public;
+            charset utf-8;
+            location / {
+                try_files $uri /index.php$is_args$args;
+            }
+
+            location ~ \.php$ {
+                include fastcgi_params;
+                fastcgi_pass  localhost:9000;
+                fastcgi_index index.php;
+                fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+                fastcgi_param DOCUMENT_ROOT $realpath_root;
+            }
+            location ~ /\. {
+                deny all;
+            }
+        }
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: {{.Values.serviceName}}-php-config
+data:
+    xdebug.ini: |
+        zend_extension=xdebug
+        xdebug.mode=debug,develop
+        xdebug.client_host=172.17.0.1
+        xdebug.client_port={{.Values.xdebugPort}}
+        xdebug.start_with_request=yes
+        xdebug.idekey={{.Values.xdebugIdeKey}}

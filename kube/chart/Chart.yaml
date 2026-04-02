@@ -1,0 +1,6 @@
+apiVersion: v2
+name: microservice
+description: Універсальний чарт для PHP мікросервісів
+type: application
+version: 0.1.0
+appVersion: "1.0.0"

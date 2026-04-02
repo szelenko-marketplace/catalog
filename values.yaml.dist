@@ -1,0 +1,12 @@
+serviceName: catalog
+xdebugPort: 9010
+xdebugIdeKey: PHPSTORM
+hostPath: /media/Data/OnlineShop/catalog # Codebase location
+
+postgres:
+    enabled: true
+    dbName: catalog_db
+    user: catalog_user
+    password: catalog_password
+    nodePort: 32001
+    hostPath: /media/Data/OnlineShop/catalog/data/postgres # DB data files location

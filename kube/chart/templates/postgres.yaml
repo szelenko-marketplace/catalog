@@ -1,0 +1,60 @@
+{{- if .Values.postgres.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.serviceName }}-db-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.serviceName }}-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.serviceName }}-db
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.serviceName }}-db
+    spec:
+      containers:
+          - name: postgres
+            image: postgres:16-alpine
+            env:
+              - name: POSTGRES_DB
+                value: {{ .Values.postgres.dbName | default .Values.serviceName }}
+              - name: POSTGRES_USER
+                value: {{ .Values.postgres.user | default "app" }}
+              - name: POSTGRES_PASSWORD
+                value: {{ .Values.postgres.password | default "secret" }}
+            ports:
+              - containerPort: 5432
+            volumeMounts:
+              - name: db-data
+                mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: db-data
+          hostPath:
+              path: {{ .Values.postgres.hostPath }}
+              type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.serviceName }}-db
+spec:
+  type: NodePort
+  ports:
+    - port: 5432
+      targetPort: 5432
+      nodePort: {{ .Values.postgres.nodePort }}
+  selector:
+    app: {{ .Values.serviceName }}-db
+{{- end }}
