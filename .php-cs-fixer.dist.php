@@ -18,7 +18,7 @@ return (new PhpCsFixer\Config())
             'import_constants' => true,
             'import_functions' => true,
         ],
-        'fully_qualified_strict_types' => true,
+        'fully_qualified_strict_types' => false,
         'no_superfluous_phpdoc_tags' => true,
         'single_quote' => true,
         'phpdoc_no_alias_tag' => true,

@@ -27,3 +27,4 @@ phpstan.neon
 ###< phpstan/phpstan ###
 /.claude
 /CLAUDE.md
+/commit_message.txt
